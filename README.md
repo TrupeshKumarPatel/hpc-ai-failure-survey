@@ -4,7 +4,7 @@ The complete evidence bundle behind the SC26 research poster **"Do AI Workloads
 Fail Differently? A Cross-Cluster Characterization of Failure Types in AI and
 HPC Systems"** and its companion FTXS'26 workshop paper **"Characterizing
 Failure Types Across HPC and AI Clusters: What Published Evidence Can and
-Cannot Say"** (Trupeshkumar Patel and Purushotham V. Bangalore, The University
+Cannot Say"** (Trupesh Patel and Purushotham V. Bangalore, The University
 of Alabama).
 
 Every quantitative claim in the poster and paper traces to a file in this
