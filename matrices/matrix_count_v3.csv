@@ -1,0 +1,12 @@
+class,LANL-22sys,BlueWaters,Titan,Mira,TSUBAME-2,TSUBAME-3,Frontier,Tachyon,Fugaku,Marconi100,SURF-Lisa,Conte-FRESCO-A,UIUC-Cray-FRESCO-B,NREL-Eagle,NREL-Kestrel,MIT-Supercloud,PWA-aggregate,Delta-A100-H100,Intrepid-RAS,NERSC-Seaborg,LANL-Mustang,LANL-Trinity,IN2P3,LLNL-Lassen,DKRZ-Mistral,Philly,Helios,Alibaba-PAI,Acme,Meta-RSC,Llama3-405B,Alibaba-Unicron,Platform-X-L4,Meta-HSDP-100k,Fire-Flyer,DGX-B200,SuperBench-Azure,ByteRobust,Minder-ByteDance,Nemotron-DGX-Cloud,Borg-2011,Borg-2019,TwoSigma,Alibaba-v2017
+GPU/accelerator hardware,,,,,44.37,27.81,,,,,,,,,,,,,,,,,,,,0.03,,,3.4,,58.7†,26.7,,31.7,45.0*,58.9,0.23‡,36.5*,38.9,,,,,
+CPU/host memory/PCIe,,42,,0.47,1.78,3.25,,,,,,,,,,,,,,,,,,,0.03*,,,,,,1.5,,,18.3,,,2.03‡,21.1*,6.6,,,,,
+network/interconnect,,,,0.017,10.7~,,,,,,,,,,,,,,,,,,,,,2.8,,,6.5,,10.1,48.6,,5.3,,,6.04‡,2.9*,5.7,,,,,
+storage/filesystem,,,,,4~,,,,,,,17.5,,,,,,,,,,,,,,5.0,,,0.4,,0.7,,,4.4,,,,9.2*,,,,,,
+power/facility,,,,0.001,,1~,,,,,,,,,,,,,,,,,,,,,,,,,8.3,,,6.5,,,,,,,,,,
+software/system,,20,,0.1,7.7~,50.59,,,,,,35.5,4,,,,,,,,,,,,,5.4,,,15.7,,13.4,12.2,,11.4,,,,2.0*,,,,,,
+user/application,,,,99.4,,,,,,,,33,48,,,19.0,,,33.1*,,,,,,,57.3,,,73.4,,,4.8,,7.1,54.9*,,,17.3*,,,,,,
+data/input,,,,,,,,,,,,,,,,,,,,,,,,,,24.2,,,0.2,,,,,,,,,,,,,,,
+SDC/fail-slow,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1.4°,,16.6,5.5,,19.0,0.33‡,1.1*,,,,,,
+scheduler/resource-mgmt,,,,,,,,,,,,,,,,,,,,,,,,,,0.37,,,,,,,,,,,,,,,,,,
+Outcome-labels & unattributed,,,,,,,,8.6,10.4<,10,14,4.0,1.1,16.4,19.3,0.5<,8.4,,66.9*,,6.4*,32~,12.1*,9.4<,5.6*,,15.5,24.3,0.6,24,1.7,,,10.0,,11.8,,9.9*,,,1.7,1.0,28.5~,8.7*
