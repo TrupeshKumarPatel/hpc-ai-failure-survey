@@ -11,11 +11,16 @@ Every quantitative claim in the poster and paper traces to a file in this
 repository, and every matrix cell traces to a quoted sentence in its published
 source.
 
+Looking for the datasets themselves? [**`survey/INDEX.md`**](survey/INDEX.md) lists all 148
+entries with links; [`survey/dataset_catalog.md`](survey/dataset_catalog.md) describes what each one contains.
+
 ## Contents
 
 | Path | What it is |
 |---|---|
-| `survey/ledger.csv`, `survey/ledger.md` | The survey table: all **148** surveyed datasets and operational reports, each assigned one of seven evidence verdicts (19 cause-attributed, 25 outcome-label only, 37 rates-only, 35 no failure information, 18 duplicates, 8 paper-statistics only, 6 umbrella repositories), with a justification per entry. |
+| **[`survey/INDEX.md`](survey/INDEX.md)** | **Start here.** All **148** surveyed datasets and operational reports in one browsable table, grouped by evidence verdict, with a link to each source. |
+| `survey/dataset_catalog.md` | What each entry actually is: organization, system, period, scale, contents, what failure information it carries, access terms and URLs, and caveats. |
+| `survey/ledger.csv`, `survey/ledger.md` | The verdict per entry with its justification: 19 cause-attributed, 25 outcome-label only, 37 rates-only, 35 no failure information, 18 duplicates, 8 paper-statistics only, 6 umbrella repositories. |
 | `taxonomy/failure_type_taxonomy.md` | 88 canonical failure types in 11 classes, each with its class-assignment rationale and a cause / symptom / outcome-label tag. |
 | `taxonomy/raw_type_enumeration.md` | The 931 raw failure-type mentions enumerated verbatim from 37 studies, before canonicalization. |
 | `matrices/matrix_count_v3.csv` | Failure-class shares by count basis, 44 system columns; each column keeps its source's own denominator. |

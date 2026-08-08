@@ -1,5 +1,3 @@
-Checkpoint written to /Users/trpatel2/ClaudeChats/PhD/REVA-MPI-AI/rework/checkpoints/ledger_merged.md. Full content:
-
 # Catalog-Coverage Ledger — Phase-1 Merge (148 entry verdicts)
 
 Merged 2026-07-18. Every one of the 148 catalog entries is assigned exactly one verdict below; the class lists account for all of them, so nothing in the catalog is unexplained.

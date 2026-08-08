@@ -188,4 +188,4 @@ deprioritize.
 
 ---
 
-Checkpoint written: /Users/trpatel2/ClaudeChats/PhD/REVA-MPI-AI/rework/checkpoints/gpu_matrix_design.md
+Checkpoint written: [local path removed]
