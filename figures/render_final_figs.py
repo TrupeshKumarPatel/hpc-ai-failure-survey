@@ -7,6 +7,9 @@ from pathlib import Path
 import numpy as np
 import matplotlib
 matplotlib.use("Agg")
+# SC26 proceedings: Type 1/TrueType fonts required, no Type 3 (bitmapped)
+matplotlib.rcParams["pdf.fonttype"] = 42
+matplotlib.rcParams["ps.fonttype"]  = 42
 import matplotlib.pyplot as plt
 import matplotlib.patches as mp
 from matplotlib.colors import LinearSegmentedColormap
@@ -48,7 +51,7 @@ def val(s):
 def mark(s):
     return re.sub(r'[\d.]','',s)
 
-hdr,dc = load(HERE.parent/'matrices'/'matrix_count_v3.csv')
+hdr,dc = load(HERE/'matrix_count_v3.csv')
 
 # ---------------- FIG A: cause-attributed heat map + colorbar ----------------
 cause_rows = ROWS[:10]

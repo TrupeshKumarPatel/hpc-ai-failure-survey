@@ -3,6 +3,15 @@
 **Trigger:** advisor-bound figures showed extensive gray; user requested a full 3x re-check plus a per-type taxonomy grounding.
 **Method:** 34 agents in 5 phases. (1) Exhaustive enumeration: 931 raw failure-type mentions from 37 studies + the dataset catalog. (2) Classification: 88 canonical types, 11 classes, per-type rationale (see 08). (3) Verify-A: every cell of both matrices (filled AND gray) checked against its source section, with quotes. (4) Verify-B: blind re-derivation of all 33 columns by agents who never saw the matrix; 25 disagreements + 27 newly derived cells escalated. (5) Verify-C: adjudication by quoted evidence.
 
+> **Scope note (added 2026-09-20).** This report documents the three-pass check as it ran on 2026-07-18, when the
+> matrices held 33 system columns (v2). The artifact ships v3, which preserves every v2 cell unchanged and adds 11
+> columns produced later to close documented coverage gaps: Alibaba-v2017, ByteRobust, DKRZ-Mistral, IN2P3,
+> Intrepid-RAS, LANL-Mustang, LANL-Trinity, LLNL-Lassen, Minder-ByteDance, NERSC-Seaborg, Nemotron-DGX-Cloud.
+> Those 11 columns carry the same per-cell source quotations. Their 28 filled cells were independently re-derived
+> and adjudicated in a separate pass on 2026-09-20, with no discrepancies found; the three Minder cells, which had
+> no extraction record, were checked directly against Table 1 of the source paper (ECC 38.9%, PCIe downgrading
+> 6.6%, NIC dropout 5.7%) and confirmed.
+
 **Outcome:** matrix v2 (matrix_count_v2.csv, matrix_time_v2.csv, dots_v2.csv; figures fig1/fig2_*_v2). Changes applied: 6 hard value errors fixed; 1 wrong-matrix cell removed; 2 non-failures (preemption/eviction = policy) removed; systematic denominator fixes (Unicron renormalized to failure shares; NREL aggregates de-mixed); 2 new COUNT columns added (Philly, Acme) from quoted counts; 11th row added (Outcome-labels & unattributed) receiving 13 columns' label-only data; ~80 presence dots distinguish 'present but unquantified' from true silence; SDC re-scoped as manifestation overlay.
 
 **Verdict:** sound after corrections. ~65% of filled cells confirmed by >=2 of 3 passes; ~45% untouched. Residual risk low-to-moderate: figure/bar reads (±1–2pp, marked ~), BlueWaters verified at abstract level (paywall), Llama-3 as-printed rows sum to ~94% (marked †), soft attribution in Fire-Flyer 54.9 and the FRESCO storage carve-out. No surviving cell rests on an unquoted derivation.

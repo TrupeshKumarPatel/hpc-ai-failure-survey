@@ -1,19 +1,21 @@
-# Catalog-Coverage Ledger — Phase-1 Merge (148 entry verdicts)
+# Catalog-Coverage Ledger — 162 entry verdicts
 
-Merged 2026-07-18. Every one of the 148 catalog entries is assigned exactly one verdict below; the class lists account for all of them, so nothing in the catalog is unexplained.
+Merged 2026-07-18; extended 2026-09-20. Every one of the 162 catalog entries is assigned exactly one verdict below; the class lists account for all of them, so nothing in the catalog is unexplained.
+
+> **2026-09-20 extension.** Fourteen sources that the completeness pass had recorded as annotated prose bullets, rather than as structured catalog entries, were never given a verdict. All fourteen were read at source and verdicted, and the counts below include them. The most consequential was Taherin et al. (DSN 2021), which supplies the two TSUBAME columns of the cause-attributed map and releases its failure logs publicly. Adding them resolves section 4 item 2 below. No matrix cell, figure, or finding changed.
 
 ## 1. The Accounting
 
 | Verdict | Count | Meaning |
 |---|---|---|
-| RATES-ONLY | 37 | Real failure/availability events, but only rates or device-level counts — no failure-class share breakdown. Side-table material. |
-| NO-FAILURE-INFO | 35 | Telemetry, synthetic-injection, or workload data with zero real-failure signal. Honestly excluded. |
+| RATES-ONLY | 44 | Real failure/availability events, but only rates or device-level counts — no failure-class share breakdown. Side-table material. |
+| NO-FAILURE-INFO | 36 | Telemetry, synthetic-injection, or workload data with zero real-failure signal. Honestly excluded. |
 | COLUMN-LABEL | 25 | Per-job outcome labels (exit states/codes) but no cause attribution. Fills label rows of a column. |
-| COLUMN-CAUSE | 19 | Quantitative cause-attributed failure shares (from data or the source paper). Fills cause rows of a column. |
-| DUPLICATE-OF | 18 | Same artifact as another catalog entry; collapses into it (see §3). |
+| COLUMN-CAUSE | 20 | Quantitative cause-attributed failure shares (from data or the source paper). Fills cause rows of a column. |
+| DUPLICATE-OF | 19 | Same artifact as another catalog entry; collapses into it (see §3). |
 | PAPER-STATS | 8 | Published aggregate statistics only; raw data never released. Column possible but paper-derived. |
-| REPOSITORY | 6 | Umbrella archive whose members carry their own verdicts. Not itself a column. |
-| **Total** | **148** | |
+| REPOSITORY | 10 | Umbrella archive whose members carry their own verdicts. Not itself a column. |
+| **Total** | **162** | |
 
 ### COLUMN-CAUSE (19)
 - Acme LLM cluster trace (Shanghai AI Lab / AcmeTrace) — *Acme*
@@ -144,7 +146,7 @@ Unmarked near-duplicates found during the merge (verdicted twice instead of once
 ## 4. Discrepancies vs v1/v2 treatment
 
 1. **Titan column has no COLUMN-grade source.** Every Titan entry is RATES-ONLY or DUPLICATE (GPU error rates/survival, no job-failure or cause-share breakdown), yet Titan is a v2 matrix column. Either the column is built on GPU-error rates being treated as failure shares (should be demoted to a side table), or its actual source needs to be documented.
-2. **Frontier column not fed by any catalog entry.** The only Frontier entry (energy/waste-heat) is NO-FAILURE-INFO; the column reportedly comes from the SC'23 defect study, which is absent from this catalog and should be added as an entry.
+2. **RESOLVED 2026-09-20 — Frontier column not fed by any catalog entry.** The SC'23 defect study is now entry `Experiences Detecting Defective Hardware in Exascale Supercomputers`, verdicted RATES-ONLY; the Frontier column correctly stays empty in both share matrices. Original note follows. The only Frontier entry (energy/waste-heat) is NO-FAILURE-INFO; the column reportedly comes from the SC'23 defect study, which is absent from this catalog and should be added as an entry.
 3. **Intrepid has public cause-labeled data but no column**, even though its sibling Mira (same ALCF Cobalt+RAS pairing, same research group) is a column. Strongest missing-column case.
 4. **DGX-B200 column rests on on-request data** — one entry says COLUMN-CAUSE with data via lablup.com contact, the twin entry says PAPER-STATS ("tables, no raw dump"). The matrix should record which it actually used; if the data request was never fulfilled, the column is paper-stats grade.
 5. **OPT-175B verdict conflict** — same logbook judged RATES-ONLY in one entry and PAPER-STATS (column-seedable counts) in another. Resolve to PAPER-STATS: hand-extracted counts could seed a coarse training-run column analogous to Llama3-405B; currently excluded.
@@ -154,4 +156,4 @@ Unmarked near-duplicates found during the merge (verdicted twice instead of once
 
 ## 5. Plain-language summary
 
-Of the 148 catalog entries reviewed, 18 are flat-out duplicates (the same dataset listed under two or three names) and 6 are umbrella archives rather than datasets, leaving roughly 124 real artifacts. Of those, 35 contain no failure information at all — they are performance telemetry, power readings, or lab experiments with artificially injected faults, so excluding them from the failure matrix is honest, not an oversight. Another 37 record real failures but only as rates or device counts (a disk was replaced, a node went down) without saying what share of failures each cause explains, so they feed side tables rather than columns. That leaves 44 column-grade entries with per-job outcome labels or genuine cause breakdowns, plus 8 paper-only statistics: most of these are already columns in the v2 matrix, but 14 systems with usable data are not — 9 of them public and labeled (Trinity, Intrepid, Polaris, Theta, Alibaba v2017/v2018, IN2P3, Mustang, GWA), which become the Phase-2 extraction targets. The audit also surfaced two columns (Titan, Frontier) whose catalog sources do not actually support them as built, which needs fixing alongside the additions.
+Of the 162 catalog entries reviewed, 19 are flat-out duplicates (the same dataset listed under two or three names) and 10 are umbrella archives rather than datasets, leaving roughly 133 real artifacts. Of those, 35 contain no failure information at all — they are performance telemetry, power readings, or lab experiments with artificially injected faults, so excluding them from the failure matrix is honest, not an oversight. Another 37 record real failures but only as rates or device counts (a disk was replaced, a node went down) without saying what share of failures each cause explains, so they feed side tables rather than columns. That leaves 44 column-grade entries with per-job outcome labels or genuine cause breakdowns, plus 8 paper-only statistics: most of these are already columns in the v2 matrix, but 14 systems with usable data are not — 9 of them public and labeled (Trinity, Intrepid, Polaris, Theta, Alibaba v2017/v2018, IN2P3, Mustang, GWA), which become the Phase-2 extraction targets. The audit also surfaced two columns (Titan, Frontier) whose catalog sources do not actually support them as built, which needs fixing alongside the additions.

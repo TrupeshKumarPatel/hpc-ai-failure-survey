@@ -1,6 +1,6 @@
 # Failure-Type Taxonomy — Every Type, Its Class, and the Rationale
 
-**Built:** 2026-07-18. **Method:** 931 raw failure-type mentions enumerated exhaustively from the 37 extracted studies plus the failure-info fields of the ~157-dataset catalog, canonicalized into 88 canonical types across 11 classes. Every assignment carries a written rationale (the causal-locus argument) and a cause / symptom / outcome-label tag. Verified as part of the triple verification pass (see 09_verification_report.md). Full raw enumeration in 08a_raw_type_enumeration.md; machine-readable copies in heatmap/taxonomy.json and heatmap/enumerated_types.json.
+**Built:** 2026-07-18. **Method:** 931 raw failure-type mentions enumerated exhaustively from the 37 extracted studies plus the failure-info fields of the 162-entry catalog, canonicalized into 88 canonical types across 11 classes. Every assignment carries a written rationale (the causal-locus argument) and a cause / symptom / outcome-label tag. Verified as part of the triple verification pass (see [`../verification/verification_report.md`](../verification/verification_report.md)). Full raw enumeration in [`raw_type_enumeration.md`](raw_type_enumeration.md). Machine-readable copies (`taxonomy.json`, `enumerated_types.json`) live in the authors' working repository and are not part of this artifact.
 
 ## Why three kinds of 'failure type' must not be mixed
 

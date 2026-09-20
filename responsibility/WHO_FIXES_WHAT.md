@@ -1,6 +1,6 @@
 # Who Fixes What — verified remediation-responsibility mapping (research completed 2026-08-07, 108/108 agents)
 
-Full report with quotes: rework/checkpoints/whofixes_final.json. All findings 3-0 verified unless noted.
+Full report with quotes: `whofixes_final.json` in the authors' working repository (not part of this artifact). All findings 3-0 verified unless noted.
 Primary sources: NVIDIA Xid catalog + GPU Debug Guidelines + A100 memory-error docs; NCSA Delta SC'25; Meta RSC.
 
 ## The verified triad (NVIDIA + Meta independently)

@@ -2,7 +2,7 @@
 
 Purpose: answer Bangalore's question "which GPU failure classes are most frequent?" to prioritize
 REVA-MPI fault-tolerance work. Merged from 12 per-system extractions (checkpoints `gpu_*.json`,
-source appendix `06a_failure_extractions_appendix.md`).
+per-system source extractions (held in the authors' working repository)).
 
 **Cardinal rule for the heat map: values are NEVER comparable across columns.** The 12 systems use
 5 incompatible denominator bases (raw rates, logged-event shares, failure/interruption shares,

@@ -1,6 +1,6 @@
 # Appendix 08a: Raw Failure-Type Enumeration (all 931 mentions)
 
-Every failure-type mention found across the 37 studies + catalog, exactly as each source names it. One row per mention per source. This is the ground truth behind 08_failure_type_taxonomy.md.
+Every failure-type mention found across the 37 studies + catalog, exactly as each source names it. One row per mention per source. This is the ground truth behind [`failure_type_taxonomy.md`](failure_type_taxonomy.md).
 
 | Raw name | Source | Layer hint | Share/rate | Evidence |
 |---|---|---|---|---|

@@ -2,9 +2,9 @@
 
 **Compiled:** 2026-06-25, from an exhaustive multi-agent search (12 discovery angles mining failure-analysis and AI-training papers plus the dataset repositories, then per-dataset enrichment).
 **For:** the baseline fault-characterization study Dr. Bangalore asked for on 2026-06-25 — characterize real HPC vs AI-workload failures before building any predictor or mitigation.
-**Count:** ~157 datasets (118 from the main search + 39 added by a completeness-critic pass, see the "Additions" section at the bottom). The field that matters most is **Failure info** — what fault signal each set actually exposes. Many carry only telemetry or job status, not labeled causes.
+**Count:** **162 entries** (118 from the main search + 44 added by the completeness pass). Every entry carries exactly one evidence verdict in [`ledger.csv`](ledger.csv). *(Corrected 2026-09-20: an earlier header said "~157", which added full records to prose-bullet mentions. The catalog has always held 118 main-body entries; the additions block now holds 44, all structured entries.)* The field that matters most is **Failure info** — what fault signal each set actually exposes. Many carry only telemetry or job status, not labeled causes.
 
-> Provenance: the first 118 came from a search run that hit a session limit before its final auto-synthesis (so a few near-duplicate entries remain and some are flagged low-confidence). A follow-up completeness critic then added 39 datasets the interrupted run had missed — those are collected in the **Additions from completeness critic** section at the end, including the highest-value one (SURF Lisa). Verify access links before citing.
+> Provenance: the first 118 came from a search run that hit a session limit before its final auto-synthesis (so a few near-duplicate entries remain and some are flagged low-confidence). A follow-up completeness pass then added the datasets the interrupted run had missed — those are collected in the **Additions from completeness critic** section at the end, including the highest-value one (SURF Lisa). Verify access links before citing.
 
 > **Read the Additions section.** Several of the most on-point datasets for the AI-vs-HPC question (SURF Lisa, NREL Eagle/Kestrel, ALCF Cobalt+RAS, Unicron, L4) are there, not in the main body.
 
@@ -1791,19 +1791,137 @@ These were surfaced by a follow-up completeness-critic pass after the main run h
 
 ## Silent Data Corruption / memory field studies (the "invisible failure" class RAS logs miss)
 
-- **Silent Data Corruptions at Scale (Meta)** — Dixit 2021, arXiv:2102.11245. Mercurial-core SDC across 100k+ CPUs. paper-stats. Foundational SDC evidence.
-- **Cores That Don't Count (Google)** — HotOS'21. CEE/mercurial-core taxonomy. paper-stats.
-- **Understanding SDC in a Large Production CPU Population (Alibaba+Tsinghua)** — SOSP 2023, >1M processors. paper-stats. (The Alibaba SDC study.)
-- **SEVI: SDC of Vector Instructions in Hyperscale Datacenters** — ASPLOS, >2,500 vector-SDC suspects. paper-stats. Hits the SIMD datapaths ML kernels use.
-- **DRAM Errors in the Wild (Google)** — Schroeder/Pinheiro/Weber, SIGMETRICS 2009. Canonical DRAM CE/UE baseline. paper-stats.
-- **Revisiting Memory Errors in Large-Scale Production Data Centers (Facebook)** — Meza et al., DSN 2015, DDR3 fleet. paper-stats. (The "Meza DRAM" study.)
+### Silent Data Corruptions at Scale (Meta)
+*aka:* Dixit 2021; Facebook SDC study
+*Org:* Meta (Facebook)
+*System:* Meta production CPU fleet
+*Period:* 18+ months
+*Scale:* hundreds of thousands of machines
+- **Contents:** Case study of a real SDC and a taxonomy of manufacturing defect types that cause silent corruption.
+- **Failure info:** RATES-ONLY. Prevalence, not shares: "hundreds of CPUs detected for these errors" across "hundreds of thousands of machines in our fleet". No failure-class breakdown, no released dataset.
+- **Access:** public, arXiv:2102.11245
+- **Used by:** Cited in the paper's CPU-side subsection as one of the rates-only SDC trio.
+- **AI vs HPC:** both (CPU side)
+- **Caveats:** Order-of-magnitude prevalence only; exact rates withheld.
+
+### Cores That Don't Count (Google)
+*aka:* Hochschild HotOS'21; mercurial cores; CEEs
+*Org:* Google
+*System:* Google production fleet
+*Period:* not stated
+*Scale:* large fleet
+- **Contents:** Call-to-action describing corrupt execution errors (CEEs) and mercurial cores.
+- **Failure info:** RATES-ONLY. "For business reasons, we are unable to reveal exact CEE rates, but we observe on the order of a few mercurial cores per several thousand machines - similar to the rate reported by Facebook". No shares, no dataset.
+- **Access:** public, ACM DL / sigops
+- **Used by:** Cited in the paper's CPU-side subsection.
+- **AI vs HPC:** both (CPU side)
+- **Caveats:** Rates explicitly withheld by the authors.
+
+### Understanding Silent Data Corruptions in a Large Production CPU Population (Alibaba)
+*aka:* Wang SOSP'23; Farron
+*Org:* Alibaba Cloud + Tsinghua
+*System:* Alibaba Cloud fleet, 28 data centers
+*Period:* 32 months, processors deployed since 2017
+*Scale:* over 1,000,000 processors
+- **Contents:** Large-scale SDC testing campaign with micro-architecture, timing and temperature analysis, plus the Farron mitigation system.
+- **Failure info:** RATES-ONLY. Observation 1: "In overall, 3.61 (per 10,000) of the CPUs are identified to cause SDCs in our study". Observation 3: "The failure rate does not decrease with newer chips". Population rate, not failure-class shares. No dataset.
+- **Access:** public, ACM DL (10.1145/3600006.3613149)
+- **Used by:** Cited in the paper's CPU-side subsection; the most precise SDC population rate available.
+- **AI vs HPC:** both (CPU side)
+- **Caveats:** Rate is per-CPU prevalence; cannot be converted to a share of job failures.
+
+### SEVI: Silent Data Corruption of Vector Instructions in Hyper-Scale Datacenters
+*aka:* SEVI; ASPLOS'26
+*Org:* Meta + Carnegie Mellon
+*System:* Meta hyperscale CPU fleet
+*Period:* 78 trillion test rounds / 14 billion CPU-seconds
+*Scale:* hyperscale
+- **Contents:** Instruction- and application-level analysis of vector-instruction SDCs plus an ABFT-based detection mechanism.
+- **Failure info:** RATES-ONLY for our purposes. Reports shares BY INSTRUCTION TYPE (FMA over 92% of observed SDCs; 98.5% affect a single vector lane), not by cluster failure class, so it cannot populate a failure-class column.
+- **Access:** public, ACM DL (10.1145/3779212.3790217)
+- **Used by:** Not cited in the paper.
+- **AI vs HPC:** both (CPU side)
+- **Caveats:** Different basis entirely: instruction type, not failure cause.
+
+### DRAM Errors in the Wild: A Large-Scale Field Study
+*aka:* Schroeder/Pinheiro/Weber SIGMETRICS'09
+*Org:* Google
+*System:* Google server fleet
+*Period:* 2.5 years
+*Scale:* majority of Google's fleet
+- **Contents:** Field study of DRAM correctable and uncorrectable error behavior by chip density, technology and DIMM age.
+- **Failure info:** RATES-ONLY. "25,000 to 70,000 errors per billion device hours per Mbit and more than 8% of DIMMs affected by errors per year". Device rates, no failure-class shares, no dataset.
+- **Access:** public, author copy
+- **Used by:** Not cited in the paper; the canonical DRAM field baseline.
+- **AI vs HPC:** HPC/CPU side
+- **Caveats:** Pre-dates the AI-cluster era; memory technology has moved on.
+
+### Revisiting Memory Errors in Large-Scale Production Data Centers
+*aka:* Meza DSN'15; Facebook DRAM study
+*Org:* Facebook + CMU
+*System:* Facebook server fleet
+*Period:* 14 months
+*Scale:* billions of device days
+- **Contents:** Modern DRAM error study with modeling of new trends and an evaluation of page offlining.
+- **Failure info:** RATES-ONLY. Memory error incidence and modeling only; no breakdown of system or job failures by cause category. No dataset released.
+- **Access:** public, paper
+- **Used by:** Not cited in the paper.
+- **AI vs HPC:** HPC/CPU side
+- **Caveats:** Memory subsystem only.
 
 ## DOE / vendor GPU reliability studies (HPC-side accelerator baselines, all paper-stats)
 
-- **Detecting Defective Hardware in Exascale Supercomputers (Frontier / MI250X, ORNL)** — SC'23, osti.gov/biblio/2224160. Node-screening across 9,408 nodes / 37k+ MI250X. AMD-GPU exascale defect rates. (The Frontier study.)
-- **Case Study with the Lassen Supercomputer (LLNL, V100)** — osti.gov/servlets/purl/1820011. Sierra-class GPU failure/repair, MTBF/MTTR. (The Sierra/Lassen study.)
-- **Examining Failures and Repairs on Supercomputers (TSUBAME-2/3)** — osti.gov/servlets/purl/2204463. Cross-generation GPU failure/repair trend.
-- **Understanding the Effects of DRAM Correctable-Error Logging at Scale** — osti.gov/biblio/1881688. CE-logging/jitter impact (simulation).
+### Experiences Detecting Defective Hardware in Exascale Supercomputers
+*aka:* Frontier defect screening; Hagerty SC'23
+*Org:* ORNL
+*System:* OLCF Frontier (MI250X)
+*Period:* June 2023 screening month
+*Scale:* 9,408 compute nodes
+- **Contents:** Two strategies for finding hardware-level faults: Slurm scheduler scavenging and an enforced weekly per-node screen.
+- **Failure info:** RATES-ONLY. Reports "five hardware defects in Frontier" found during June 2023 across 9,408 nodes. This is a diagnostic screening programme, not a production failure characterization; the 19-of-24 and 5-of-24 detection counts were rejected as failure shares by the three-pass verification. No dataset released.
+- **Access:** public, OSTI 2224160
+- **Used by:** Feeds the Frontier column's justification for staying empty in both share matrices. Resolves ledger.md section 4 item 2.
+- **AI vs HPC:** HPC
+- **Caveats:** One screening month; detections are not production failure shares.
+
+### Monitoring Large Scale Supercomputers: A Case Study with the Lassen Supercomputer
+*aka:* Patki IEEE Cluster 2021; CSM monitoring study
+*Org:* LLNL + IBM
+*System:* LLNL Lassen
+*Period:* multiple years
+*Scale:* over 1.4 million jobs, heterogeneous nodes
+- **Contents:** Longitudinal study of a first-of-its-kind dataset collected by IBM Cluster System Management (CSM), with a power-management case study.
+- **Failure info:** DUPLICATE. Corrected 2026-09-20 after reading the source: this is a MONITORING and POWER study, not the "Sierra-class GPU failure/repair MTBF/MTTR" study an earlier prose bullet described. Its released data is the same Lassen job/energy corpus already held as the LAST entry.
+- **Access:** public, OSTI 1820011
+- **Used by:** Collapses into the LAST Lassen job/energy entry.
+- **AI vs HPC:** HPC
+- **Caveats:** Earlier catalog description was wrong; corrected here.
+
+### Examining Failures and Repairs on Supercomputers with Multi-GPU Compute Nodes
+*aka:* Taherin DSN 2021; Tsubame failure logs
+*Org:* LLNL + Northeastern University
+*System:* TSUBAME-2 and TSUBAME-3 (Tokyo Tech GSIC)
+*Period:* T2 Jan 2012 - Aug 2013; T3 May 2017 - Feb 2020
+*Scale:* T2 1,408 nodes / 3 K20X per node; T3 4 P100 per node
+- **Contents:** Two failure logs with time of failure, time to recovery and failure category per event, plus the analysis tooling.
+- **Failure info:** COLUMN-CAUSE with a released dataset: "Our analysis tool and failure logs are available open-source". T2 = 897 failures, T3 = 338 failures. Source-stated shares of all logged failures: GPU 44.37% and CPU 1.78% on T2; software 50.59% and GPU 27.81% on T3; GPU-driver problems 42.7% of the 171 T3 software root loci. Table III gives multi-GPU involvement: T2 roughly 70% of GPU failures affect more than one GPU, T3 over 92% affect only one.
+- **Access:** public dataset, doi.org/10.5281/zenodo.4606221
+- **Used by:** Supplies the TSUBAME-2 and TSUBAME-3 columns of the cause-attributed map and the correlated-failure and proactive-testing findings.
+- **AI vs HPC:** HPC (GPU-dense, bridges to the AI side)
+- **Caveats:** Category taxonomies differ between T2 and T3; some shares are bar-chart reads.
+
+### Understanding the Effects of DRAM Correctable Error Logging at Scale
+*aka:* CE logging overhead study; IEEE Cluster 2021
+*Org:* DOE laboratory authors
+*System:* simulation of extreme-scale workloads
+*Period:* n/a
+*Scale:* n/a
+- **Contents:** Simulation of the relationship between correctable-error recovery and logging activity and application performance.
+- **Failure info:** NO-FAILURE-INFO. A simulation and modeling study, not a measurement of real failures. The one rate it quotes (correctable errors roughly 20x uncorrectable) is taken from other work.
+- **Access:** public, OSTI 1881688
+- **Used by:** Not cited in the paper.
+- **AI vs HPC:** HPC
+- **Caveats:** Simulation only; contributes no observed failure data.
 
 ## Supercomputer job-outcome & telemetry datasets (mostly downloadable)
 
@@ -1943,10 +2061,57 @@ These were surfaced by a follow-up completeness-critic pass after the main run h
 
 ## Dataset repositories / archives not yet named
 
-- **IEEE DataPort** (ieee-dataport.org) — assorted HPC log/failure datasets; mixed public/member-gated. Note: reconcile the main catalog's "ALCF Public Data Catalog" with the IEEE DataPort "ALCF Data Catalog" (DOI 10.21227/bhfr-wx19, subscription-gated, Intrepid→Aurora with exit codes + THETA_HARDWARE_ERROR + RAS).
-- **OSTI.gov** — primary index for DOE-lab RAS/reliability papers (Frontier, Lassen, TSUBAME, DRAM studies above).
-- **OpsPAI / Tsinghua NetMan AIOps hubs** (github.com/OpsPAI/awesome-AIOps ; nkcs.iops.ai) — curated failure/anomaly and disk-failure-prediction datasets adjacent to HPC/AI ops.
-- **Chameleon Trovi** (chameleoncloud.org/experiment/share) — reproducible systems-reliability experiment artifacts on GPU/NVMe testbeds.
+### IEEE DataPort
+*aka:* ieee-dataport.org
+*Org:* IEEE
+*System:* umbrella archive
+*Period:* ongoing
+*Scale:* many datasets
+- **Contents:** Hosts independently authored datasets across domains, including HPC log and failure sets.
+- **Failure info:** REPOSITORY. Not itself a failure dataset; members carry their own provenance and verdicts.
+- **Access:** mixed public / member-gated
+- **Used by:** Member datasets appear separately where relevant.
+- **AI vs HPC:** both
+- **Caveats:** Some members are subscription-gated.
+
+### OSTI.GOV
+*aka:* osti.gov; DOE technical report index
+*Org:* US Department of Energy
+*System:* umbrella archive
+*Period:* ongoing
+*Scale:* DOE-wide
+- **Contents:** Primary index for DOE laboratory technical reports, including RAS and reliability studies.
+- **Failure info:** REPOSITORY. An index of reports; individual reports carry their own verdicts.
+- **Access:** public
+- **Used by:** Source for the Frontier, Lassen and TSUBAME reports in this catalog.
+- **AI vs HPC:** HPC
+- **Caveats:** Index only.
+
+### OpsPAI / Tsinghua NetMan AIOps dataset hubs
+*aka:* awesome-AIOps; nkcs.iops.ai
+*Org:* OpsPAI / Tsinghua NetMan
+*System:* umbrella archive
+*Period:* ongoing
+*Scale:* many datasets
+- **Contents:** Curated lists pointing to failure, anomaly and disk-failure-prediction datasets held elsewhere.
+- **Failure info:** REPOSITORY. A list of pointers, not a dataset.
+- **Access:** public
+- **Used by:** Not cited in the paper.
+- **AI vs HPC:** both
+- **Caveats:** Adjacent to HPC/AI ops rather than specific to it.
+
+### Chameleon Trovi artifact sharing
+*aka:* chameleoncloud.org/experiment/share
+*Org:* Chameleon testbed
+*System:* umbrella archive
+*Period:* ongoing
+*Scale:* many artifacts
+- **Contents:** Artifact-sharing service for reproducible systems experiments on GPU and NVMe testbeds.
+- **Failure info:** REPOSITORY. Members carry their own provenance.
+- **Access:** public
+- **Used by:** Not cited in the paper.
+- **AI vs HPC:** both
+- **Caveats:** Testbed experiments rather than production failure data.
 
 ## Confirmed NOT to exist as downloadable data (agents checked)
 

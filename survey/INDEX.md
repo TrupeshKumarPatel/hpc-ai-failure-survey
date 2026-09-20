@@ -1,4 +1,4 @@
-# Index of all 148 surveyed datasets and operational reports
+# Index of all 162 surveyed datasets and operational reports
 
 Every entry the survey examined, grouped by what its evidence can support.
 Full descriptions (organization, scale, contents, access, caveats) are in
@@ -6,9 +6,10 @@ Full descriptions (organization, scale, contents, access, caveats) are in
 [`ledger.md`](ledger.md) and [`ledger.csv`](ledger.csv).
 
 
-## Cause-attributed — publishes failure shares with cause attribution (19)
+## Cause-attributed — publishes failure shares with cause attribution (20)
 
 | Dataset / report | System | Access | Link |
+| Examining Failures and Repairs on Supercomputers with Multi-GPU Compute Nodes (Taherin et al., DSN 2021) | TSUBAME-2 and TSUBAME-3 | public dataset | [source](https://doi.org/10.5281/zenodo.4606221) |
 |---|---|---|---|
 | Acme LLM cluster trace (Shanghai AI Lab / AcmeTrace) | Acme (Seren + Kalos, Shanghai AI Lab) | public | [source](https://github.com/InternLM/AcmeTrace) |
 | AcmeTrace — utilization + failure/RAS subset (Acme traces, Seren & Kalos) | Acme (Shanghai AI Lab, Seren+Kalos) | public | [source](https://huggingface.co/datasets/Qinghao/AcmeTrace) |
@@ -60,9 +61,16 @@ Full descriptions (organization, scale, contents, access, caveats) are in
 | Theta job + Darshan I/O logs (ALCF) | Theta | public | [source](https://reports.alcf.anl.gov/data/) |
 | Two Sigma cluster trace (via CMU ATLAS) | Two Sigma (CMU ATLAS) | public |  |
 
-## Rates only — event rates or MTBF, no share breakdown (37)
+## Rates only — event rates or MTBF, no share breakdown (44)
 
 | Dataset / report | System | Access | Link |
+| Silent Data Corruptions at Scale (Meta, Dixit et al. 2021) | Meta production CPU fleet | public | [source](https://arxiv.org/abs/2102.11245) |
+| Cores That Don't Count (Google, Hochschild et al., HotOS'21) | Google production fleet | public | [source](https://doi.org/10.1145/3458336.3465297) |
+| Understanding Silent Data Corruptions in a Large Production CPU Population (Alibaba, SOSP'23) | Alibaba Cloud fleet | public | [source](https://doi.org/10.1145/3600006.3613149) |
+| SEVI: Silent Data Corruption of Vector Instructions in Hyper-Scale Datacenters (ASPLOS'26) | Meta hyperscale CPU fleet | public | [source](https://doi.org/10.1145/3779212.3790217) |
+| DRAM Errors in the Wild (Google, SIGMETRICS'09) | Google server fleet | public | [source](https://doi.org/10.1145/1555349.1555372) |
+| Revisiting Memory Errors in Large-Scale Production Data Centers (Facebook, DSN'15) | Facebook server fleet | public | [source](https://doi.org/10.1109/DSN.2015.57) |
+| Experiences Detecting Defective Hardware in Exascale Supercomputers (Frontier, SC'23) | OLCF Frontier | public | [source](https://www.osti.gov/biblio/2224160) |
 |---|---|---|---|
 | A Large-Scale Study of Soft-Errors on GPUs in the Field (Nie et al., HPCA 2016) | Titan | restricted / on-request (ORNL-internal logs; paper public) | [source](https://www.researchgate.net/publication/299641571) |
 | Alibaba 2023 GPU cluster trace (cluster-trace-gpu-v2023) + HPN link/switch failure statistics | Alibaba PAI (v2023 trace) + Alibaba HPN network | public | [source](https://github.com/alibaba/clusterdata/tree/master/cluster-trace-gpu-v2023) |
@@ -115,9 +123,13 @@ Full descriptions (organization, scale, contents, access, caveats) are in
 | SuperBench (Microsoft Azure A100 fleet) | Microsoft Azure A100 fleet | paper-only |  |
 | Unicron (Alibaba) | Alibaba production LLM clusters (Unicron) | paper-only |  |
 
-## Umbrella repository — members carry their own verdicts (6)
+## Umbrella repository — members carry their own verdicts (10)
 
 | Dataset / report | System | Access | Link |
+| IEEE DataPort | umbrella archive | mixed public / member-gated | [source](https://ieee-dataport.org) |
+| OSTI.GOV (DOE technical report index) | umbrella archive | public | [source](https://www.osti.gov) |
+| OpsPAI / Tsinghua NetMan AIOps dataset hubs | umbrella archive | public | [source](https://github.com/OpsPAI/awesome-AIOps) |
+| Chameleon Trovi artifact sharing | umbrella archive | public | [source](https://www.chameleoncloud.org/experiment/share/) |
 |---|---|---|---|
 | ALCF Public Data Catalog (Argonne Leadership Computing Facility Data Catalog) | ALCF facility umbrella (Intrepid/Mira/Cooley/Theta/ThetaGPU/Polaris/Aurora) | public | [source](https://reports.alcf.anl.gov/data/) |
 | ALCF Public Data reports (Mira/Theta job + I/O + RAS summaries) | ALCF portal (Mira + Theta umbrella) | public | [source](https://reports.alcf.anl.gov/data/) |
@@ -126,9 +138,10 @@ Full descriptions (organization, scale, contents, access, caveats) are in
 | Failure Trace Archive (FTA) | FTA umbrella (26 systems, 1994-2009) | gone | [source](http://fta.scem.uws.edu.au/) |
 | SNIA IOTTA Trace Repository (incl. Reliability sub-collection) | SNIA IOTTA umbrella | public (click-through license) |  |
 
-## No failure information — telemetry, I/O, power, or synthetic only (35)
+## No failure information — telemetry, I/O, power, or synthetic only (36)
 
 | Dataset / report | System | Access | Link |
+| Understanding the Effects of DRAM Correctable Error Logging at Scale (IEEE Cluster 2021) | simulation of extreme-scale workloads | public | [source](https://www.osti.gov/biblio/1881688) |
 |---|---|---|---|
 | Adastra MI250 power dataset (CINES/GENCI) | Adastra (CINES) | public |  |
 | ALBADross Eclipse Active-Learning Anomaly-Diagnosis Dataset (HPAS-injected LDMS telemetry) | Sandia Eclipse (+Volta testbed) | on-request | [source](https://www.osti.gov/servlets/purl/2004257) |
@@ -166,9 +179,10 @@ Full descriptions (organization, scale, contents, access, caveats) are in
 | USRC Workstation Filesystem Statistics & Archive/NFS Metadata (LANL) | LANL workstations + archive/NFS filesystems | public | [source](https://usrc.lanl.gov/data/storage-data.php) |
 | USRC/CFDR LANL Systems 8/15/16/23 Node Usage Traces (MX8/MX15/MX16/MX23) | LANL 22-system / CFDR umbrella (usage companions) | public | [source](https://usrc.lanl.gov/data/failure-data.php) |
 
-## Duplicate — same artifact as another entry (18)
+## Duplicate — same artifact as another entry (19)
 
 | Dataset / report | System | Access | Link |
+| Monitoring Large Scale Supercomputers: A Case Study with the Lassen Supercomputer (Patki et al., Cluster 2021) | LLNL Lassen | public | [source](https://www.osti.gov/biblio/1820011) |
 |---|---|---|---|
 | AcmeTrace (Seren + Kalos cluster traces) | Acme (Seren + Kalos, Shanghai AI Lab) | public | [source](https://github.com/InternLM/AcmeTrace) |
 | ALCF I/O Data Repository (Mira Darshan Log Collection) | ALCF Mira/Theta Darshan | public | [source](https://www.alcf.anl.gov/publications/alcf-io-data-repository) |
@@ -191,5 +205,5 @@ Full descriptions (organization, scale, contents, access, caveats) are in
 
 ---
 
-**Total: 148 entries.**
+**Total: 162 entries.**
 

@@ -26,7 +26,7 @@ The 18 clusters that only have outcome labels. One bar each: the share of jobs t
 
 - **Rates-only systems** (Titan, Frontier, Delta, LANL 22-systems, GWA, Backblaze, the SSD/SDC fleet studies): they publish MTBFs, event counts, or per-device rates, not shares. They appear in the side notes and prose, not the map. Forcing them in would mean inventing percentages.
 - **Insufficient systems** (ALCF Polaris, ALCF Theta, Alibaba v2018): checked directly; no published outcome or cause shares exist. Documented in ledger.md with the evidence.
-- Full entry-by-entry accounting of all ~148 catalog entries: `ledger.md` / `ledger.csv`.
+- Full entry-by-entry accounting of all 162 catalog entries: [`../survey/ledger.md`](../survey/ledger.md) / [`../survey/ledger.csv`](../survey/ledger.csv).
 
 ## Markers (only four)
 
@@ -34,4 +34,4 @@ The 18 clusters that only have outcome labels. One bar each: the share of jobs t
 
 ## Where each number comes from
 
-Every cell traces to a quote: `checkpoints/phase2_extracts_all.json` (new columns) and `../heatmap/matrix_notes.md` + `../09_verification_report.md` (v2 columns, triple-verified).
+Every cell traces to a quoted source statement. The 33 original columns were triple-verified; see [`../verification/verification_report.md`](../verification/verification_report.md). The 11 columns added later to close coverage gaps carry the same per-cell quotes and were independently re-derived and adjudicated in a separate pass. The raw extraction records behind both (`matrix_notes.md`, `phase2_extracts_all.json`) live in the authors' working repository and are not part of this artifact.
