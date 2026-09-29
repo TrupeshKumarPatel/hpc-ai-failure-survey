@@ -27,7 +27,7 @@ entries with links; [`survey/dataset_catalog.md`](survey/dataset_catalog.md) des
 | `matrices/gpu_matrix_design.md` | The GPU error-class matrix (12 systems, 11 classes, K20X to B200) with design rationale and per-cell source quotes. |
 | `verification/verification_report.md` | The three-pass verification protocol (per-cell quote audit, blind re-derivation, adjudication) and the six value errors it caught and corrected. |
 | `responsibility/WHO_FIXES_WHAT.md` | The who-fixes-what mapping: each failure class to its documented remediation owner (application developer / operator / vendor), from NVIDIA and site documentation, including documented points of divergence. |
-| `figures/` | The three poster figures and the matplotlib script that regenerates them from the matrices (`python figures/render_final_figs.py`; requires Python 3 + matplotlib + numpy). |
+| `figures/` | The three figures used in the paper and poster, and the matplotlib script that regenerates them from the matrices (`python figures/render_final_figs.py`; requires Python 3 + matplotlib + numpy). |
 
 ## Reading the matrices
 

@@ -13,8 +13,10 @@ matplotlib.rcParams["ps.fonttype"]  = 42
 import matplotlib.pyplot as plt
 import matplotlib.patches as mp
 from matplotlib.colors import LinearSegmentedColormap
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 HERE = Path(__file__).parent
+DATA = HERE.parent / 'matrices'   # repo layout: CSVs live in matrices/
 F = 1.0  # fonts below are ABSOLUTE printed points; canvases match poster placement size
 
 ROWS = ["GPU/accelerator hardware","CPU/host memory/PCIe","network/interconnect",
@@ -51,7 +53,7 @@ def val(s):
 def mark(s):
     return re.sub(r'[\d.]','',s)
 
-hdr,dc = load(HERE/'matrix_count_v3.csv')
+hdr,dc = load(DATA/'matrix_count_v3.csv')
 
 # ---------------- FIG A: cause-attributed heat map + colorbar ----------------
 cause_rows = ROWS[:10]
@@ -70,7 +72,7 @@ for i in range(len(cause_rows)):
         v=M[i,j]
         if np.isnan(v): continue
         t=("0" if v==0 else f"{v:.2f}" if v<0.1 else f"{v:.1f}" if v<10 else f"{v:.0f}")+MK.get((i,j),'')
-        ax.text(j,i,t,ha='center',va='center',fontsize=14,
+        ax.text(j,i,t,ha='center',va='center',fontsize=18,
                 color="#ffffff" if v>55 else "#1a1a1a")
 ax.set_xticks(np.arange(-0.5,len(cols)),minor=True); ax.set_yticks(np.arange(-0.5,len(cause_rows)),minor=True)
 ax.grid(which='minor',color='white',linewidth=1.2); ax.tick_params(which='minor',length=0)
@@ -84,8 +86,8 @@ ax.axvline(nh-0.5,color='#1a1a1a',linewidth=1.6)
 ax.text((nh-1)/2,-0.85,'Traditional HPC',ha='center',fontsize=20,fontweight='bold')
 ax.text(nh+(len(cols)-nh-1)/2,-0.85,'AI training',ha='center',fontsize=20,fontweight='bold')
 cb = fig.colorbar(im, ax=ax, fraction=0.028, pad=0.012)
-cb.set_label("share of that cluster's failures (%)", fontsize=17)
-cb.ax.tick_params(labelsize=16); cb.outline.set_visible(False)
+cb.set_label("share of that cluster's failures (%)", fontsize=19)
+cb.ax.tick_params(labelsize=13); cb.outline.set_visible(False)
 fig.tight_layout()
 fig.savefig(HERE/'figA_causes_final.png', bbox_inches='tight')
 fig.savefig(HERE/'figA_causes_final.pdf', bbox_inches='tight'); plt.close(fig)
@@ -101,34 +103,34 @@ groups={**{c:'#3d6fb4' for c in HPCset},**{c:'#b4643d' for c in AIset}}
 colors=[groups.get(c,'#6e6e6e') for c,_,_ in labels]
 ax.barh(range(len(labels)),[v for _,v,_ in labels],color=colors,height=0.62)
 for i,(c,v,s) in enumerate(labels):
-    ax.text(v+0.4,i,s,va='center',fontsize=17,color='#1a1a1a')
+    ax.text(v+0.4,i,s,va='center',fontsize=19,color='#1a1a1a')
 ax.set_yticks(range(len(labels)))
 ax.set_yticklabels([SH.get(c,c) for c,_,_ in labels],fontsize=20)
-ax.set_xlabel("failed / unsuccessful share of jobs (%), scheduler label only",fontsize=17)
+ax.set_xlabel("failed / unsuccessful share of jobs (%), scheduler label only",fontsize=19)
 ax.tick_params(axis='x',labelsize=16)
 ax.legend(handles=[mp.Patch(color='#3d6fb4',label='HPC'),mp.Patch(color='#b4643d',label='AI'),
-                   mp.Patch(color='#6e6e6e',label='Cloud')],fontsize=14,loc='lower right',frameon=False)
+                   mp.Patch(color='#6e6e6e',label='Cloud')],fontsize=18,loc='lower right',frameon=False)
 for s in ('top','right'): ax.spines[s].set_visible(False)
 fig.tight_layout()
 fig.savefig(HERE/'figB_labels_final.png',bbox_inches='tight')
 fig.savefig(HERE/'figB_labels_final.pdf',bbox_inches='tight'); plt.close(fig)
 
 # ---------------- FIG C: GPU error classes + colorbar ----------------
-GROWS=["Uncorrectable memory (DBE/HBM)","Correctable memory (SBE/remap)","MMU / illegal access  [mostly app bugs]",
-"GSP / driver","NVLink","Off-bus / device lost (Xid79)","PCIe / interface","Thermal / power","SDC (silent)",
-"Generic GPU (no subclass)","Other named"]
-GCOLS=[("Blue Waters\nK20X","logged\nevents",{0:(0.009,'~'),2:(36.8,'~'),3:(21.1,'~'),5:(41.9,'~'),10:(0.12,'~')}),
- ("TSUBAME-2\nK20X","all failures",{9:(44.4,'')}),
- ("TSUBAME-3\nP100","all failures",{3:(21.6,'~'),9:(27.8,'')}),
+GROWS=["Uncorrectable memory\n(DBE/HBM)","Correctable memory\n(SBE/remap)","MMU / illegal access\n[mostly app bugs]",
+"GSP / driver","NVLink","Off-bus / device lost\n(Xid79)","PCIe / interface","Thermal / power","SDC (silent)",
+"Generic GPU\n(no subclass)","Other named"]
+GCOLS=[("Blue\nWaters\nK20X","logged\nevents",{0:(0.009,'~'),2:(36.8,'~'),3:(21.1,'~'),5:(41.9,'~'),10:(0.12,'~')}),
+ ("TSUBAME\n-2\nK20X","all\nfailures",{9:(44.4,'')}),
+ ("TSUBAME\n-3\nP100","all\nfailures",{3:(21.6,'~'),9:(27.8,'')}),
  ("Delta\nA100","critical\nXids",{0:(0.17,''),1:(0.45,'<'),2:(59.8,''),3:(26.0,''),4:(13.0,''),5:(0.07,''),7:(0.52,'')}),
- ("Ampere 3-sys\nA100/A40","ECC events",{0:(0.8,'<'),1:(99.2,'')}),
- ("Fire-Flyer\nA100 PCIe","raw Xids",{0:(0.25,''),1:(1.9,''),2:(53.0,''),3:(0.01,''),4:(42.6,''),5:(0.29,''),10:(2.0,'')}),
+ ("Ampere\n3-sys\nA100/A40","ECC\nevents",{0:(0.8,'<'),1:(99.2,'')}),
+ ("Fire-Flyer\nA100 PCIe","raw\nXids",{0:(0.25,''),1:(1.9,''),2:(53.0,''),3:(0.01,''),4:(42.6,''),5:(0.29,''),10:(2.0,'')}),
  ("Acme\nA100","failed-job\nGPU-time",{0:(11.0,''),4:(30.3,''),9:(15.8,'')}),
- ("Meta RSC\nA100","lemon nodes",{6:(15.4,''),9:(28.2,'')}),
+ ("Meta RSC\nA100","lemon\nnodes",{6:(15.4,''),9:(28.2,'')}),
  ("SuperBench\nA100","defective\nnodes",{1:(3.37,''),4:(0.30,''),6:(2.03,'')}),
  ("Delta\nH100","critical\nXids",{0:(3.19,''),1:(1.26,'<'),2:(95.4,''),3:(0.16,''),4:(0,''),5:(0,''),7:(0,'')}),
- ("Llama-3\nH100","interruptions",{0:(17.2,''),3:(4.1,''),5:(30.1,''),7:(1.4,''),8:(1.4,''),10:(4.5,'')}),
- ("DGX B200","17 failures",{0:(11.8,''),3:(5.9,''),4:(29.4,''),5:(11.8,''),10:(41.2,'')}),
+ ("Llama-3\nH100","interrup-\ntions",{0:(17.2,''),3:(4.1,''),5:(30.1,''),7:(1.4,''),8:(1.4,''),10:(4.5,'')}),
+ ("DGX B200","17\nfailures",{0:(11.8,''),3:(5.9,''),4:(29.4,''),5:(11.8,''),10:(41.2,'')}),
 ]
 n_r,n_c=len(GROWS),len(GCOLS)
 V=np.full((n_r,n_c),np.nan); VM={}
@@ -138,28 +140,29 @@ C=np.full_like(V,np.nan)
 for j in range(n_c):
     col=V[:,j]; mx=np.nanmax(col) if not np.all(np.isnan(col)) else 1
     C[:,j]=col/mx*100 if mx>0 else col
-fig,ax=plt.subplots(figsize=(23.0,11.3),dpi=300)
+fig,ax=plt.subplots(figsize=(23.0,11.0),dpi=300)
 im=ax.imshow(np.ma.masked_invalid(C),cmap=cmap,vmin=0,vmax=100,aspect="auto")
 for i in range(n_r):
     for j in range(n_c):
         v=V[i,j]
         if np.isnan(v): continue
         t=("0" if v==0 else f"{v:.2f}" if v<0.1 else f"{v:.1f}" if v<10 else f"{v:.0f}")+VM.get((i,j),'')
-        ax.text(j,i,t,ha='center',va='center',fontsize=14,
+        ax.text(j,i,t,ha='center',va='center',fontsize=18,
                 color="#ffffff" if (C[i,j] if not np.isnan(C[i,j]) else 0)>55 else "#1a1a1a")
 ax.set_xticks(np.arange(-0.5,n_c),minor=True); ax.set_yticks(np.arange(-0.5,n_r),minor=True)
 ax.grid(which='minor',color='white',linewidth=1.3); ax.tick_params(which='minor',length=0)
 ax.set_xticks(range(n_c))
-ax.set_xticklabels([f"{l}\n[{d}]" for l,d,_ in GCOLS],fontsize=14.5)
+ax.set_xticklabels([f"{l}\n[{d}]" for l,d,_ in GCOLS],fontsize=18.5)
 ax.set_yticks(range(n_r)); ax.set_yticklabels(GROWS,fontsize=21)
 for s in ax.spines.values(): s.set_visible(False)
 for x,lab,ctr in ((1.5,'K20X era',0.5),(2.5,'P100',2),(8.5,'A100 era',5.5),(10.5,'H100',9.5),(None,'B200',11)):
     if x is not None: ax.axvline(x,color='#1a1a1a',linewidth=1.6)
     ax.text(ctr,-0.85,lab,ha='center',fontsize=20,fontweight='bold')
-cb=fig.colorbar(im,ax=ax,fraction=0.028,pad=0.012)
-cb.set_label("share, normalized within each column (%)",fontsize=17)
-cb.ax.tick_params(labelsize=16); cb.outline.set_visible(False)
-fig.tight_layout()
+_div=make_axes_locatable(ax)
+_cax=_div.append_axes('right', size='1.3%', pad=0.16)
+cb=fig.colorbar(im,cax=_cax)
+cb.set_label("share, normalized within each column (%)",fontsize=15)
+cb.ax.tick_params(labelsize=13); cb.outline.set_visible(False)
 fig.savefig(HERE/'figC_gpu_errors_final.png',bbox_inches='tight')
 fig.savefig(HERE/'figC_gpu_errors_final.pdf',bbox_inches='tight'); plt.close(fig)
 print("final figures rendered: figA/figB/figC *_final")
