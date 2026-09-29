@@ -37,6 +37,18 @@ comparable to each other** — each keeps its own denominator, stated per column
 Compare within a column only. Values marked `~` are chart reads (1–2 pp
 uncertainty), `*` are counted from raw public traces, `<` are upper bounds.
 
+## AI assistance
+
+This repository was prepared with the help of Claude (Anthropic), a large
+language model, used as a writing and analysis assistance tool under the
+authors' direction. The tool ran the automated literature and repository
+searches and the per-entry evidence classification recorded in `survey/`,
+transcribed published values into `matrices/`, wrote the figure script, and
+drafted this documentation. Every matrix value was checked against its quoted
+source in the three-pass verification described in
+`verification/verification_report.md`. The authors take complete
+accountability for the contents of this repository.
+
 ## Provenance and license
 
 All values derive from published, publicly accessible sources: peer-reviewed
